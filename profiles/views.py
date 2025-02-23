@@ -3,11 +3,8 @@ from django.contrib import messages
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth import login, logout, authenticate
 
-
 from .models import Profile
 from .forms import RegistrationForm, LoginForm
-
-
 
 
 def home_view(request):
