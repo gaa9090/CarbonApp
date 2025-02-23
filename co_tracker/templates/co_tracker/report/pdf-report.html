@@ -1,0 +1,100 @@
+{% load humanize %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <style>
+        p{
+            font-weight:bold;
+            font-size:16px;
+        }
+        .text-center{
+            text-align: center;
+        }
+        
+        .styled-table {
+            border-collapse: collapse;
+            margin: 25px 0;
+            font-size: 0.9em;
+            font-family: sans-serif;
+            min-width: 400px;
+            box-shadow: 0 0 20px rgba(63, 230, 12, 0.507);
+        }
+        
+        .styled-table thead tr {
+            background-color: orange;
+            color: #ffffff;
+            text-align: left;
+        }
+        
+        .styled-table th,
+        .styled-table td {
+            padding: 12px 15px;
+        }
+        
+        .styled-table tbody tr {
+            border-bottom: 1px solid #dddddd;
+        }
+        
+        .styled-table tbody tr:nth-of-type(even) {
+            background-color: #f3f3f3;
+        }
+        
+        .styled-table tbody tr:last-of-type {
+            border-bottom: 2px solid #32c9ab;
+        }
+    </style>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Budget Detail</title>
+</head>
+<body>
+    <h1 class="text-center">{{budget.month}}: Expenses Report</h1>
+    <hr>
+    <h2 class="text-center">Title: {{report.title}}</h2>
+    <hr>
+    <P class="text-center">Description: {{report.description|safe}}</P>
+    <hr>
+    <br>
+    <P class="text-center">Created: {{report.created|date}}</P>
+    <br>
+    <h1 class="text-center">Monthly Spendings Vissual</h1>
+    <div class="text-center">
+        <p class="text-center">The Data</p>
+        <br>
+        <img src="{{report.image.path}}" height="600px">
+    </div> 
+    <br>
+    <table class="styled-table">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Transaction Id</th>
+            <th>Price</th>
+            <th>Category</th>
+            <th>Created</th>
+        </tr>
+        </thead>
+        <tbody>
+            {% for spend in budget.get_monthly_spends %}
+        <tr>
+            <td>{{spend.name}}</td>
+            <td>{{spend.transaction_id}}</td>
+            <td>${{spend.price}}</td>
+            <td>{{spend.category}}</td>
+            <td>{{spend.date|date}}</td>
+        </tr>
+        {% endfor %}
+        <tbody>
+    </table>
+    <h1 class="text-center">Total Spend: <strong>${{budget.get_total_spend|floatformat:2 |intcomma}}</strong></h1>
+    {% if budget.get_total_spend == budget.monthly_budget %}
+    <h1 class="text-center">You are not in debet but you dont have any money  <b>${{budget.get_budget_left|floatformat:2 |intcomma}}</b></h1>
+    {% elif budget.get_total_spend < budget.monthly_budget  %}
+    <h1 class="text-center">Your on track to save money you have  <b>${{budget.get_budget_left|floatformat:2 |intcomma}}</b> remaining</h1>
+    {% else %}
+    <h1 class="text-center">Your are in debet for: <strong>${{budget.get_budget_left|floatformat:2 |intcomma}}</strong></h1>
+    <br>
+    {% endif %}
+</body>
+</html>
