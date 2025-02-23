@@ -5,7 +5,7 @@
     <div class="card-header">
       <ul class="nav nav-tabs card-header-tabs">
         <li class="nav-item">
-          <a class="nav-link" href="{{report.get_pdf_url}}" >PDF</a>
+          <a class="nav-link" href="{% url 'tracker:pdf-report' report.pk %}" >PDF</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="{{report.get_delete_url}}">Delete</a>
@@ -24,6 +24,6 @@
   </div>
   </div>
   <div class="d-grid gap-2 mt-4">
-    <a href="{{budget.get_report_url}}" type="button" class="btn btn-danger btn-lg">Back To Reports</a>
+    <a href="{% url 'tracker:all-report' %}" type="button" class="btn btn-danger btn-lg">Back To Reports</a>
   </div>
 {% endblock content %}

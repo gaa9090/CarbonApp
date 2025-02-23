@@ -1,82 +1,85 @@
-{% extends 'base.html' %}
-{% load crispy_forms_tags %}
-{% block content %}
-
+{% extends 'base.html' %} {% load crispy_forms_tags %} {% block content %}
 <div class="text-center">
-    <h1 class="mt-2">CO2 Emissions Analysis Results: <b>{{tracker.name}}</b></h1>
-<a class="btn btn-primary" href="{% url 'tracker:tracker' %}">Back To Reports</a>
+  <h1 class="mt-2">CO2 Emissions Analysis Results: <b>{{tracker.name}}</b></h1>
+  <a class="btn btn-primary" href="{% url 'tracker:tracker' %}"
+    >Back To Reports</a
+  >
 </div>
-
-{{df|safe}}
 <div class="text-center mt-4 card">
-    <div class="card-body">
-        <form method="POST" action="" autocomplete="off">
-            {% csrf_token %}
-            {{chart_search|crispy}}
-            <button type="submit" class="btn btn-info btn-lg">Get Data</button>
-        </form>
-    </div>
+  <div class="card-body">
+    <form method="POST" action="" autocomplete="off">
+      {% csrf_token %} {{chart_search|crispy}}
+      <button type="submit" class="btn btn-info btn-lg">Get Data</button>
+    </form>
+  </div>
 </div>
 <p id="tracker_id" class="hidden">{{tracker.id}}</p>
 {% if graph %}
-    <div class="card mt-2 text-center">
-        <div class="card-body">
-            <img class="img-responsive" src="data:image/png;base64, {{graph|safe}}" id="plot">
-        </div>
-        <button id="FormReportBtn" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#ReportModal">
-            Add Report
-          </button>
-
-
-    </div>
+<div class="card mt-2 text-center">
+  <div class="card-body">
+    <img
+      class="img-responsive"
+      src="data:image/png;base64, {{graph|safe}}"
+      id="plot"
+    />
+  </div>
+  <button
+    id="FormReportBtn"
+    type="button"
+    class="btn btn-primary"
+    data-bs-toggle="modal"
+    data-bs-target="#ReportModal"
+  >
+    Add Report
+  </button>
+</div>
 {% endif %}
 
-
-
-
-
-
-
-
 <!-- modal -->
-  <div class="modal fade" id="ReportModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Add Report</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body" id="modal-body">
-            <div class='mt-2' id="alertBox"></div>
-            <form method="POST" action="" id="report-form" autocomplete="off">
-                {{report_form|crispy}}
-                <button type="submit" class="btn btn-secondary">Add</button>
-            </form>
-        </div>
+<div
+  class="modal fade"
+  id="ReportModal"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Add Report</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body" id="modal-body">
+        <div class="mt-2" id="alertBox"></div>
+        <form method="POST" action="" id="report-form" autocomplete="off">
+          {{report_form|crispy}}
+          <button type="submit" class="btn btn-secondary">Add</button>
+        </form>
       </div>
     </div>
   </div>
-
-
-
-
+</div>
 
 <script>
+  // For Form
+  const modalBody = document.getElementById("modal-body");
+  const alertBox = document.getElementById("alertBox");
+  const reportForm = document.getElementById("report-form");
+  const reportBtn = document.getElementById("FormReportBtn");
+  const chartImage = document.getElementById("plot");
+  const fromTitle = document.getElementById("id_title");
+  const formDescription = document.getElementById("id_description");
+  const csrf = document.getElementsByName("csrfmiddlewaretoken")[0].value;
+  const tracker_id = document.getElementById("tracker_id");
+  // console.log(tracker_id + "Id is ")
+  // const myTracker = 1
 
-// For Form  
-const modalBody = document.getElementById('modal-body')
-const alertBox = document.getElementById('alertBox')
-const reportForm = document.getElementById('report-form')
-const reportBtn = document.getElementById('FormReportBtn')
-const chartImage = document.getElementById('plot')
-const fromTitle = document.getElementById('id_title')
-const formDescription = document.getElementById('id_description')
-const csrf = document.getElementsByName('csrfmiddlewaretoken')[0].value
-const tracker_id = document.getElementById('tracker_id')
-// console.log(tracker_id + "Id is ")
-// const myTracker = 1
-
-const theAlert = (type, img, msg)=>{
+  const theAlert = (type, img, msg) => {
     alertBox.innerHTML = `
     <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
         <symbol id="check-circle-fill" fill="currentColor" viewBox="0 0 16 16">
@@ -94,56 +97,50 @@ const theAlert = (type, img, msg)=>{
         <div>
           ${msg}
         </div>
-     </div>`
-}
-if(reportBtn){
-    reportBtn.addEventListener('click', (event)=>{
-    event.preventDefault();
-    chartImage.setAttribute('class', 'w-100')
-    chartImage.setAttribute('class', 'img-thumbnail')
-    modalBody.prepend(chartImage)
+     </div>`;
+  };
+  if (reportBtn) {
+    reportBtn.addEventListener("click", (event) => {
+      event.preventDefault();
+      chartImage.setAttribute("class", "w-100");
+      chartImage.setAttribute("class", "img-thumbnail");
+      modalBody.prepend(chartImage);
 
-
-        reportForm.addEventListener('submit', (event)=>{
+      reportForm.addEventListener("submit", (event) => {
         event.preventDefault();
-        const formData = new FormData()
-        formData.append('csrfmiddlewaretoken', csrf)
-        formData.append('title', fromTitle.value)
-        formData.append('description', formDescription.value)
-        formData.append('image', chartImage.src)
+        const formData = new FormData();
+        formData.append("csrfmiddlewaretoken", csrf);
+        formData.append("title", fromTitle.value);
+        formData.append("description", formDescription.value);
+        formData.append("image", chartImage.src);
         // url = `tracker/add-report/${tracker.pk}`
         // url = '{{ tracker.get_add_report_url }}'
         url = "{% url 'tracker:add-report' tracker.pk %}";
 
-        console.log("{{ tracker.get_add_report_url }}" + " Url")
-        console.log(url)
+        console.log("{{ tracker.get_add_report_url }}" + " Url");
+        console.log(url);
         $.ajax({
-            type: 'POST',
-            url : url,
-            data:formData,
-            success: function(response){
-                the_img = `<svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Success:"><use xlink:href="#check-circle-fill"/></svg>`
-                theAlert('success', the_img, 'Your form was successfully Saved')
-                setTimeout(()=>{
-                    alertBox.innerHTML = ''
-                }, 2000)
-                reportForm.reset()
-            },
-            error:function(error){
-                the_img = `<svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Danger:"><use xlink:href="#exclamation-triangle-fill"/></svg>`
-                theAlert('danger', the_img, 'Please try aging their was an error')
-            },  
-            processData:false,
-            contentType:false,
-        })
-    
-    })
-})
-}
+          type: "POST",
+          url: url,
+          data: formData,
+          success: function (response) {
+            the_img = `<svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Success:"><use xlink:href="#check-circle-fill"/></svg>`;
+            theAlert("success", the_img, "Your form was successfully Saved");
+            setTimeout(() => {
+              alertBox.innerHTML = "";
+            }, 2000);
+            reportForm.reset();
+          },
+          error: function (error) {
+            the_img = `<svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Danger:"><use xlink:href="#exclamation-triangle-fill"/></svg>`;
+            theAlert("danger", the_img, "Please try aging their was an error");
+          },
+          processData: false,
+          contentType: false,
+        });
+      });
+    });
+  }
 </script>
 
-
-
 {% endblock content %}
-
-

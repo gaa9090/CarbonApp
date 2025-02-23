@@ -30,14 +30,13 @@ class CsvUploadForm(forms.ModelForm):
         fields = [
             'file_name',
         ]
-
-
 class ReportForm(forms.ModelForm):
     class Meta:
         model = Report
         fields = [
             'title',
             'description',
+
         ]
 
 
@@ -47,4 +46,6 @@ class TrackerForm(forms.ModelForm):
         fields = [
             'title',
             'description',
+            'start_year',
+            'go_up_to_year',
         ]

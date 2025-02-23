@@ -1,8 +1,10 @@
+body {
+    background-color: #aa3131; /* Light offwhite color */
+}
+
 .hidden{
     display: none;
 }
-
-
 
 .border-img {
     border: 1px solid rgb(255, 145, 0);
@@ -89,19 +91,22 @@
 
 }
 
-.small-image{
+.small-image {
     height: 30px;
     width: auto;
-    border-radius: 10%;
-    border: 1px solid blue;
+    border: none !important; /* Remove any borders */
+    outline: none !important; /* Prevent focus outline */
 }
 
-.small-image:hover{
+.small-image:hover {
     height: 50px;
     width: auto;
     border-radius: 20%;
-    border: 1px solid green;
+    border: none !important; /* Ensure no border on hover */
+    outline: none !important;
+    box-shadow: none !important; /* Remove any shadows */
 }
+
 
 .my-search{
     width: 50%;

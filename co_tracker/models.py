@@ -16,9 +16,11 @@ class Tracker(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
     objects = TrackerManager()
+    start_year = models.PositiveIntegerField()
+    go_up_to_year = models.PositiveIntegerField(default=1)
 
     def __str__(self):
-        return self.title
+        return str(self.title)
     
     # Get all the spending on the Budget
     def get_co_count(self):
@@ -62,6 +64,7 @@ class Co_Tracker(models.Model):
     tracker = models.ForeignKey(Tracker, on_delete=models.CASCADE)
     category = models.ForeignKey(Category, blank=True, on_delete=models.CASCADE, default="Other")
     amount = models.FloatField()
+    is_new = models.BooleanField(default=False)
     year = models.IntegerField(null=True, blank=True)
     objects = CoManager()
     

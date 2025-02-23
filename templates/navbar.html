@@ -2,7 +2,7 @@
 <nav class="navbar navbar-expand-lg navbar-dark " style="background-color: #3c3c3c; color: #d3d3d3">
   <div class="container-fluid">
     <a class="navbar-brand" href="">
-        <img src="{% static 'logo.jpg' %}" class="small-image" alt="logo">
+        <img src="{% static 'images/logo.jpg' %}" class="small-image" alt="logo">
     </a>
 
     {% if request.user.is_authenticated %}
@@ -12,7 +12,7 @@
           <a class="nav-link" href="{% url 'tracker:tracker' %}">All Tracker</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="">All Reports</a>
+          <a class="nav-link" href="{% url "tracker:all-report" %}">All Reports</a>
         </li>
       </ul>
     </div>

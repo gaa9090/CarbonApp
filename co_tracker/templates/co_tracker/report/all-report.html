@@ -1,45 +1,59 @@
-{% extends 'base.html' %}
-{% load humanize %}
-{% load crispy_forms_tags %}
-{% block content %}
+{% extends 'base.html' %} {% load crispy_forms_tags %} {% block content %}
 
 <div class="w-100 text-center">
-    <form method="POST"  autocomplete="off" aution="">
-        {% csrf_token %}
-        <input type="text" name='q'  placeholder="Search Report by title budgetName month ect" class="my-search">
-        <button type="submit"  class="btn btn-outline-success btn-lg">Search</button>
-    </form>
-{% if query %}
-    <h1>You have searched For: <b>{{query}}</b> found {{report_count}} reslut</h1>
-    {% for reprot in reprot %}
-        <div class="card text-center the-report mt-4">
-            <div class="card-body">
-                <h3>Title: {{report.title}}</h3>
-                <h3>Budget Name Title: {{report.budget.name}}</h3>
-                <p>Report Form Month Of: <b>{{report.budget.month}}</b></p>
-                <p>Month Budget: <b>${{report.budget.monthly_budget|floatformat:2 |intcomma}}</b></p>
-                <a href="{{reprot.get_report_url}}" type="button" class="btn btn-success btn-lg">View Report</a>
-                <a href="{{reprot.get_delete_url}}" type="button" class="btn btn-danger btn-lg">Delete Report</a>
-            </div>
-        </div>
-    {% endfor %}
-{% else %}
-{% if report_count > 0 %}
-    <h1>Total Spend Report Available {{report_count}}</h1>
-{% else %}
-        <h1>You have No Report</h1>
-{% endif %}
-    {% for report in report %}
-    <div class="card text-center the-report mt-4">
-        <div class="card-body">
-            <h3>Title: {{report.title}}</h3>
-            <h3>Budget Name Title: {{report.budget.name}}</h3>
-            <a href="{{report.get_report_url}}" type="button" class="btn btn-success btn-lg">View Report</a>
-            <a href="{{report.get_delete_url}}" type="button" class="btn btn-danger btn-lg">Delete Report</a>
-        </div>
+  <form method="POST" autocomplete="off" aution="">
+    {% csrf_token %}
+    <input
+      type="text"
+      name="q"
+      placeholder="Search your past reports"
+      class="my-search"
+    />
+    <button type="submit" class="btn btn-secondary btn-lg">Search</button>
+  </form>
+  {% if query %}
+  <h1>
+    You have searched For: <b>{{query}}</b> found {{report_count}} Results
+  </h1>
+  {% for report in report %}
+  <div class="card text-center the-report mt-4">
+    <div class="card-body">
+      <h3>Title: {{report.title}}</h3>
+      <p>Report Form Month Of: <b>{{report.budget.month}}</b></p>
+      <a
+        class="btn btn-secondary btn-lg"
+        href="{% url 'tracker:view-report' report.pk %}"
+        >View Report</a
+      >
+
+      <a
+        href="{% url 'tracker:delete-report' report.pk %}"
+        class="btn btn-danger btn-lg"
+        >Delete Report</a
+      >
     </div>
-    {% endfor %}
-    {% endif %}
+  </div>
+  {% endfor %} {% else %} {% if report_count > 0 %}
+  <h1>Total Spend Report Available {{report_count}}</h1>
+  {% else %}
+  <h1>You have No Report</h1>
+  {% endif %} {% for report in report %}
+  <div class="card text-center the-report mt-4">
+    <div class="card-body">
+      <h3>Title: {{report.title}}</h3>
+      <a
+        class="btn btn-secondary btn-lg"
+        href="{% url 'tracker:view-report' report.pk %}"
+        >View Report</a
+      >
+      <a
+        href="{% url 'tracker:delete-report' report.pk %}"
+        class="btn btn-danger btn-lg"
+        >Delete Report</a
+      >
+    </div>
+  </div>
+  {% endfor %} {% endif %}
 </div>
 
 {% endblock content %}
