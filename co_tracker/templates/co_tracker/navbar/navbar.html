@@ -1,0 +1,71 @@
+{% load crispy_forms_tags %}
+<ul class="nav nav-fill">
+  <li class="nav-item">
+    {% if tracker.get_co_count > 0 %}
+    <a
+      class="nav-link active to-view"
+      href="{% url 'tracker:analyse' pk=tracker.pk %}"
+      >View Analysis</a
+    >
+    {% else %}
+    <button class="nav-link active">View Analysis</button>
+    {% endif %}
+  </li>
+  {% if tracker.get_co_count <= 0 %}
+  <li class="nav-item">
+    <button
+      type="button"
+      class="btn btn-primary mt-2"
+      data-bs-toggle="modal"
+      data-bs-target="#uploadFile"
+    >
+      Upload
+    </button>
+  </li>
+  {% endif %}
+
+  <li class="nav-item">
+    <a
+      class="nav-link delete-budge"
+      href="{% url 'tracker:delete-tracker' pk=tracker.pk %}"
+      >Delete</a
+    >
+  </li>
+</ul>
+
+<!-- Modal -->
+<div
+  class="modal fade"
+  id="uploadFile"
+  data-bs-backdrop="static"
+  data-bs-keyboard="false"
+  tabindex="-1"
+  aria-labelledby="staticBackdropLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="staticBackdropLabel">Modal title</h1>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div id="alert-box"></div>
+      <div class="modal-body">
+        <form
+          id="csv-upload-form"
+          method="POST"
+          action="{% url 'tracker:upload' tracker.pk %}"
+          enctype="multipart/form-data"
+        >
+          {% csrf_token %} {{csv_form | crispy}}
+          <button class="btn btn-outline-warning" type="submit">Upload</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

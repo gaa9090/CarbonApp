@@ -1,0 +1,90 @@
+{% extends 'base.html' %} {% block content %}
+<div class="card mt-2">
+  <h1 class="card-title text-center">
+    Welcome To Your Profile: <b>{{ profile.get_full_name }}</b>
+  </h1>
+</div>
+<div class="row mt-2">
+  <div class="col-md-6 text-center">
+    <img
+      class="img-responsive img-thumbnail border-img"
+      src="{{profile.avatar.url}}"
+      alt="Profile Avatar"
+    />
+    <button
+      type="button"
+      class="btn btn-dark btn-lg mt-2 text-center"
+      data-bs-toggle="modal" 
+      data-bs-target="#profileModal"
+    >
+      Update Profile
+    </button>
+  </div>
+  <div class="col-md-6">
+    <table class="table table-success table-striped">
+      <tr>
+        <td>First Name:</td>
+        <td><b>{{ profile.first_name }}</b></td>
+      </tr>
+      
+      <tr>
+        <td>Created:</td>
+        <td><b>{{ profile.created|timesince }} Ago</b></td>
+      </tr>
+      <tr>
+        <td>Created Date:</td>
+        <td><b>{{ profile.created|date }}</b></td>
+      </tr>
+
+      <tr>
+        <td>Created Time:</td>
+        <td><b>{{ profile.created|time }}</b></td>
+      </tr>
+      <tr>
+        <td>Updated:</td>
+        <td><b>{{ profile.updated|timesince }} Ago</b></td>
+      </tr>
+      <tr>
+        <td>Updated Date:</td>
+        <td><b>{{ profile.updated|date }}</b></td>
+      </tr>
+      <tr>
+        <td>Updated Time:</td>
+        <td><b>{{ profile.updated|time }}</b></td>
+      </tr>
+    </table>
+  </div>
+</div>
+
+<!-- Modal -->
+<div
+  class="modal fade"
+  id="profileModal"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Update Profile</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        >Hit</button>
+      </div>
+      <div class="modal-body">
+        <form method="POST" action="" enctype="multipart/form-data">
+          {% csrf_token %} {{form}}
+          <button type="submit" class="btn btn-secondary">
+            Update Profile
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock content %}

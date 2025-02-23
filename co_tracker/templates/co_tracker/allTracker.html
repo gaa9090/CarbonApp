@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+<!-- Modal -->
+<div class="modal fade" id="BudgetModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form action="#" method="POST" autocomplete="off">
+          {% csrf_token %}
+          {{tracker_from|crispy}}
+          <button type="submit" class="btn btn-secondary">Save changes</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+{% if tracker %}
+<h3 class="text-center mt-2">All Tracker Available to you: <b>{{size}}</b></h3>
+{% for tracker in tracker %}
+<div class="card text-center mt-4">
+  {% include "co_tracker/navbar/navbar.html" %}
+    <div class="card-body">
+      {% if size > 0 %}
+        <h4 class="card-title">Name: <strong>{{tracker.title}}</strong></h4>
+      {% else %}
+        <h5 class="card-title">Name: {{tracker.title}}</h5>
+      {% endif %}
+      <br>
+      <p class="card-text">{{tracker.description|safe}}</p>
+    </div>
+    <hr>  
+    <p class="card-text">Total amount of Carbon 2 data {{tracker.get_co_count|safe}}</p>
+    <div class="card-footer">
+        Created {{tracker.created|date}}
+      </div>
+  </div>
+{% endfor %}
+
+ {% else %}
+  <h1 class="text-center mt-2">No Tracker Available</h1>
+    <div class="text-center mt-2">
+      <div class="spinner-grow text-primary" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+      <div class="spinner-grow text-secondary" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+      <div class="spinner-grow text-success" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+      <div class="spinner-grow text-danger" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+      <div class="spinner-grow text-warning" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+      <div class="spinner-grow text-info" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+      <div class="spinner-grow text-dark" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+    </div>
+  {% endif %}
+
+<div class="d-grid gap-2 mt-4">
+  <button type="button" class="btn btn-dark btn-lg" data-bs-toggle="modal" data-bs-target="#BudgetModal">Create New </button>
+</div>
+<br>
+{% endblock content %}

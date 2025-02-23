@@ -1,0 +1,142 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+<!-- Custom Styles -->
+<style>
+  body {
+    background-color: #9c9c9c;
+  }
+  .auth-container {
+    max-width: 600px;
+    margin: auto;
+    position: relative;
+    overflow: hidden;
+    background: white;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.15);
+  }
+  .btn-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 25px;
+  }
+  .btn-container button {
+    width: 50%;
+    padding: 12px;
+    font-size: 1.2rem;
+    border: none;
+    outline: none;
+    background: #3c3c3c;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+  }
+  .btn-container .active {
+    background: rgb(131, 213, 162);
+    color: #2e2e2e;
+  }
+  /* The form container is twice the width to hold both forms side by side */
+  .form-container {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+    width: 200%;
+  }
+  /* Each form-box takes half of the container's width */
+  .form-box {
+    width: 50%;
+    padding: 30px;
+    background: white;
+    border-radius: 15px;
+  }
+  .form-box legend {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 15px;
+  }
+  .form-box input {
+    font-size: 1.1rem;
+    padding: 10px;
+  }
+  .form-box button {
+    font-size: 1.2rem;
+    padding: 12px;
+  }
+  @media (max-width: 768px) {
+    .auth-container {
+      max-width: 90%;
+      padding: 30px;
+    }
+    .btn-container button {
+      font-size: 1rem;
+    }
+    .form-box {
+      padding: 20px;
+    }
+  }
+</style>
+
+<!-- Auth Container -->
+<div class="auth-container mt-5">
+  <div class="text-center">
+    <h1 id="formTitle">Login</h1>
+  </div>
+
+  <!-- Toggle Buttons -->
+  <div class="btn-container">
+    <button id="loginBtn" class="active" onclick="toggleForm('login')">Login</button>
+    <button id="registerBtn" onclick="toggleForm('register')">Register</button>
+  </div>
+
+  <!-- Form Container with both forms side by side -->
+  <div class="form-container" id="formContainer">
+    <!-- Login Form -->
+    <div class="form-box">
+      <form method="POST">
+        <legend>Login Now</legend>
+        {% csrf_token %}
+        {{ login_form|crispy }}
+        <div class="d-grid gap-2">
+          <button type="submit" name="login_submit" class="btn btn-warning">Login</button>
+        </div>
+      </form>
+    </div>
+
+    <!-- Register Form -->
+    <div class="form-box">
+      <form method="POST">
+        <legend>Register Now</legend>
+        {% csrf_token %}
+        {{ register_form|crispy }}
+        <div class="d-grid gap-2">
+          <button type="submit" name="register_submit" class="btn btn-dark">Register</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- JavaScript for Sliding Effect -->
+<script>
+  function toggleForm(formType) {
+    var loginBtn = document.getElementById("loginBtn");
+    var registerBtn = document.getElementById("registerBtn");
+    var formContainer = document.getElementById("formContainer");
+    var formTitle = document.getElementById("formTitle");
+
+    if (formType === "register") {
+      formTitle.innerText = "Register";
+      formContainer.style.transform = "translateX(-50%)";
+      loginBtn.classList.remove("active");
+      registerBtn.classList.add("active");
+    } else {
+      formTitle.innerText = "Login";
+      formContainer.style.transform = "translateX(0%)";
+      registerBtn.classList.remove("active");
+      loginBtn.classList.add("active");
+    }
+  }
+</script>
+
+{% endblock content %}

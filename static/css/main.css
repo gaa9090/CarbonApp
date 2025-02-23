@@ -1,0 +1,148 @@
+.hidden{
+    display: none;
+}
+
+
+
+.border-img {
+    border: 1px solid rgb(255, 145, 0);
+    border-radius: 10px;
+    padding: 5px;
+    width: 80%;
+    height: auto;
+}
+
+.border-img:hover{
+    border-radius: 20px;
+    background-color:aliceblue;
+    box-shadow: 0 0 2px 1px rgba(6, 181, 235, 0.5);
+    width: 100%;
+}
+
+.float-right{
+    float: right;
+}
+.float-right:hover{
+    border-radius: 20px;
+    font-weight: bold;
+    font-size: 20px;
+    color:black;
+}
+
+.float-middle{
+    margin-left: 420px;
+}
+.float-middle:hover{
+    border-radius: 20px;
+    font-weight: bold;
+    font-size: 20px;
+    color:whitesmoke;
+}
+
+.delete-budge:hover{
+    background-color:red;
+    color:black;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.mt-140{
+    margin-top:140px !important;
+}
+.budget-update{
+    color:black;
+    border-radius: 20px;
+    border: 1px solid green;
+    font-weight: bold;
+
+}
+
+.delete-all:hover{
+    background-color:red;
+    font-weight: bold;
+    font-size: 22px;
+    color:black
+
+}
+
+.upload-file:hover{
+    background-color:rgb(3, 217, 233);
+    font-weight: bold;
+    font-size: 22px;
+    color:black;
+}
+
+.add-many:hover{
+    background-color:rgb(29, 219, 4);
+    font-weight: bold;
+    font-size: 22px;
+    color:black;
+}
+
+
+.budget-report:hover{
+    border-radius: 6px;
+    color: orange;
+    font-weight: bold;
+    font-size: 22px;
+    background-color: green;
+
+}
+
+.small-image{
+    height: 30px;
+    width: auto;
+    border-radius: 10%;
+    border: 1px solid blue;
+}
+
+.small-image:hover{
+    height: 50px;
+    width: auto;
+    border-radius: 20%;
+    border: 1px solid green;
+}
+
+.my-search{
+    width: 50%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    box-sizing: border-box;
+    border-radius: 4px;
+    border: 2px solid blue;
+    color:black;
+    background-color:#e8e8E2;
+}
+
+.my-search:focus{
+    background-color: rgb(191, 255, 191);
+    border: 2px solid rgb(40, 235, 14);
+}
+
+.the-report{
+    width: 50%;
+    box-shadow: 0 9px 0 rgb(27, 180, 96);
+    transition: 0.4s;
+    padding: 15px 15px;
+    margin: 0 auto;
+}
+
+.avatar{
+    vertical-align: middle;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-left: 40px;
+}
+
+.to-view{
+    font-weight: bold;
+    font-size: 22px;
+}
+
+.to-view:hover{
+    font-weight: bold;
+    font-size: 28px;
+    color:orange;
+    background-color: rgba(5, 226, 171, 0.404);
+}

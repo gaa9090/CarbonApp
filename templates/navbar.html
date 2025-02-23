@@ -1,0 +1,44 @@
+{% load static %}
+<nav class="navbar navbar-expand-lg navbar-dark " style="background-color: #3c3c3c; color: #d3d3d3">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="">
+        <img src="{% static 'logo.jpg' %}" class="small-image" alt="logo">
+    </a>
+
+    {% if request.user.is_authenticated %}
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'tracker:tracker' %}">All Tracker</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="">All Reports</a>
+        </li>
+      </ul>
+    </div>
+    {% else %}
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" href="{% url "profile:login" state="2" %}">Register</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url "profile:login" state="1" %}">Login</a>
+        </li>
+      </ul>
+    </div>
+    {% endif %}
+   
+    {% if request.user.is_authenticated %}
+      <div class="nav-item dropdown">
+        <div class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+          <img src="{{request.user.profile.avatar.url}}" class="image-thumbnail avatar" alt="User Image">&nbsp;{{request.user}}
+        </div>
+        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+          <li><a class="dropdown-item" href="">Profile</a></li>
+          <li><a class="dropdown-item" href="{% url 'profile:logout' %}">Logout</a></li>
+        </ul>
+      </div>
+    {% endif %}
+  </div>
+</nav>

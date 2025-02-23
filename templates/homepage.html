@@ -1,0 +1,62 @@
+{% extends "base.html" %} {% block content %}
+
+<main class="container mt-5">
+  <!-- Hero Section -->
+  <section
+    class="text-center p-5 rounded shadow"
+    style="background-color: rgb(131, 213, 162); color: #2e2e2e"
+  >
+    <h1 class="display-4">Welcome to leafZer0</h1>
+    <p class="lead">
+      Gain insights about carbon emissions of your organization
+    </p>
+    <a href="{% url 'profile:login' state=1 %}" class="btn btn-dark btn-lg">Get Started</a>
+  </section>
+
+  <!-- Features Section -->
+  <section class="row text-center mt-5">
+    <div class="col-md-4 d-flex">
+      <div
+        class="card shadow-sm p-4 border-0 h-100 w-100"
+        style="background-color: #3c3c3c; color: #d3d3d3"
+      >
+        <h3>Carbon Footprint Modeling</h3>
+        <p>We can model the carbon footprint of your organization</p>
+      </div>
+    </div>
+    <div class="col-md-4 d-flex">
+      <div
+        class="card shadow-sm p-4 border-0 h-100 w-100"
+        style="background-color: #3c3c3c; color: #d3d3d3"
+      >
+        <h3>Emissions Breakdown</h3>
+        <p>
+          We provide a step-by-step analysis of your organization's carbon
+          footprint
+        </p>
+      </div>
+    </div>
+    <div class="col-md-4 d-flex">
+      <div
+        class="card shadow-sm p-4 border-0 h-100 w-100"
+        style="background-color: #3c3c3c; color: #d3d3d3"
+      >
+        <h3>Enhanced Recommendations</h3>
+        <p>We provide AI-powered insights for emissions minimization</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- About Section -->
+  <section
+    class="text-center mt-5 p-4 rounded shadow"
+    style="background-color: rgb(131, 213, 162); color: #2e2e2e"
+  >
+    <h2>About Us</h2>
+    <p class="lead">
+      We create simple and effective web solutions with a monochrome aesthetic.
+    </p>
+  </section>
+</main>
+
+{% endblock content %}
