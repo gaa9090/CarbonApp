@@ -4,6 +4,10 @@ We aim to provide insightful information and predictions based on an orginizatio
 data. This project uses a website to map user data onto different graphs and uses AI to generate 
 predictions for what is to come.
 
+
+- **Devposts Link:** View the Hackathon Project [here](https://devpost.com/software/leaf-zer0?_gl=1*1g5tr82*_gcl_au*MTc0OTAyMjQwNS4xNzM3MDY2NDIx*_ga*MTQzNzUzMjQwMi4xNzM3MDY2NDIx*_ga_0YHJK3Y10M*MTc0NDEyNDYyMS4xMS4xLjE3NDQxMjQ2OTcuMC4wLjA.)
+
+
 ## Tech Stack
 Frontend: HTML, CSS, Javascript, Bootstrap
 Backend: Django, Python
